@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Murecho } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/config/site";
+import Header from "@/components/header";
+import { cn } from "@/lib/utils";
+import Footer from "@/components/footer";
 
-const inter = Inter({ subsets: ["latin"] });
+const murecho = Murecho({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
@@ -37,7 +40,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja" suppressHydrationWarning>
-      <body className={inter.className}>{children}</body>
+      <body className={cn(murecho.className, "min-h-dvh flex flex-col")}>
+        <Header />
+        <main className="flex-1 container">{children}</main>
+        <Footer />
+      </body>
     </html>
   );
 }
