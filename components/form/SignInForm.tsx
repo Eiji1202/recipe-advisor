@@ -15,12 +15,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import Image from "next/image";
 
 const schema = z.object({
-  username: z
-    .string()
-    .min(1, "ユーザー名を入力してください")
-    .max(20, "ユーザー名は20文字以内で入力してください"),
   email: z
     .string()
     .min(1, "メールアドレスを入力してください")
@@ -36,50 +33,31 @@ const schema = z.object({
     }),
 });
 
-type SignUpFormValues = z.infer<typeof schema>;
+type SignInFormValues = z.infer<typeof schema>;
 
-const SignUpForm = () => {
-  const form = useForm<SignUpFormValues>({
+const SignInForm = () => {
+  const form = useForm<SignInFormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
-      username: "",
       email: "",
       password: "",
     },
   });
 
-  const onSubmit = (data: SignUpFormValues) => {
+  const onSubmit = (data: SignInFormValues) => {
     console.log(data);
   };
   return (
     <Card className="w-full lg:p-6">
       <CardHeader>
         <CardTitle className="text-lg lg:text-2xl text-center">
-          新規ユーザー登録
+          ログイン
         </CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="space-y-4 lg:space-y-6">
-              <FormField
-                control={form.control}
-                name="username"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="lg:text-lg">ユーザー名</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="ユーザー名を入力してください"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage>
-                      {form.formState.errors.username?.message}
-                    </FormMessage>
-                  </FormItem>
-                )}
-              />
               <FormField
                 control={form.control}
                 name="email"
@@ -123,16 +101,34 @@ const SignUpForm = () => {
               <Button
                 type="submit"
                 className="w-full lg:w-1/2 lg:text-lg rounded-full"
-                variant="success"
               >
-                登録
+                ログイン
               </Button>
             </div>
           </form>
+          <div className="flex items-center my-4">
+            <div className="flex-grow border-t border-gray-300"></div>
+            <span className="mx-4 text-gray-400 text-sm">または</span>
+            <div className="flex-grow border-t border-gray-300"></div>
+          </div>
+          <div className="flex justify-center">
+            <Button
+              className="w-full lg:w-1/2 lg:text-lg rounded-full flex items-center gap-2"
+              variant="outline"
+            >
+              <Image
+                src="google.svg"
+                alt="sign in for google"
+                width={20}
+                height={20}
+              />
+              Googleでログイン
+            </Button>
+          </div>
         </Form>
       </CardContent>
     </Card>
   );
 };
 
-export default SignUpForm;
+export default SignInForm;
