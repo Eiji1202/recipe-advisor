@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { Murecho } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/config/site";
-import Header from "@/components/header";
 import { cn } from "@/lib/utils";
-import Footer from "@/components/footer";
+import Footer from "@/components/layout/Footer";
+import Header from "@/components/layout/Header";
 
 const murecho = Murecho({ subsets: ["latin"] });
 
@@ -39,10 +39,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja" suppressHydrationWarning>
+    <html
+      lang="ja"
+      suppressHydrationWarning
+    >
       <body className={cn(murecho.className, "min-h-dvh flex flex-col")}>
         <Header />
-        <main className="flex-1 container">{children}</main>
+        <main className="flex-1 flex items-center justify-center bg-zinc-100">
+          {children}
+        </main>
         <Footer />
       </body>
     </html>
