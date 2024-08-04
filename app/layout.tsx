@@ -44,9 +44,7 @@ export default function RootLayout({
     >
       <body className={cn(murecho.className, "min-h-dvh flex flex-col")}>
         <Header />
-        <main className="flex-1 flex items-center justify-center bg-yellow-50">
-          {children}
-        </main>
+        <main className="flex-1 relative">{children}</main>
       </body>
     </html>
   );
