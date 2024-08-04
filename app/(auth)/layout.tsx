@@ -4,8 +4,11 @@ export default function SignUpLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col lg:flex-row justify-center w-full p-6 gap-4 lg:gap-6">
-      {children}
-    </div>
+    <>
+      <div className="absolute inset-0 bg-wallpaper-auth bg-cover bg-center" />
+      <div className="absolute inset-0 flex items-center justify-center">
+        {children}
+      </div>
+    </>
   );
 }
