@@ -9,44 +9,27 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import Image from "next/image";
-
-const schema = z.object({
-  email: z
-    .string()
-    .min(1, "メールアドレスを入力してください")
-    .email("メールアドレスの形式が正しくありません"),
-  password: z
-    .string()
-    .min(1, "パスワードを入力してください")
-    .refine((val) => val.length >= 8, {
-      message: "パスワードは8文字以上で入力してください",
-    })
-    .refine((val) => /^[a-zA-Z\d]+$/.test(val), {
-      message: "パスワードは半角英数で入力してください",
-    }),
-});
-
-type SignInFormValues = z.infer<typeof schema>;
+import { SignInFormType, signInSchema } from "@/utils/schema/signIn";
 
 const SignInForm = () => {
-  const form = useForm<SignInFormValues>({
-    resolver: zodResolver(schema),
+  const form = useForm<SignInFormType>({
+    resolver: zodResolver(signInSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  const onSubmit = (data: SignInFormValues) => {
+  const onSubmit: SubmitHandler<SignInFormType> = (data) => {
     console.log(data);
   };
+
   return (
     <Card className="w-full lg:p-6">
       <CardHeader>
