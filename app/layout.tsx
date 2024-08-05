@@ -4,6 +4,7 @@ import "./globals.css";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 import Header from "@/components/layout/Header";
+import { Toaster } from "@/components/ui/toaster";
 
 const murecho = Murecho({ subsets: ["latin"] });
 
@@ -45,6 +46,7 @@ export default function RootLayout({
       <body className={cn(murecho.className, "min-h-dvh flex flex-col")}>
         <Header />
         <main className="flex-1 relative">{children}</main>
+        <Toaster />
       </body>
     </html>
   );

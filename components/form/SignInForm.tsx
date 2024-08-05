@@ -15,10 +15,10 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import Image from "next/image";
-import { SignInFormType, signInSchema } from "@/utils/schema/signIn";
+import { SignInSchemaType, signInSchema } from "@/utils/schema/signIn";
 
 const SignInForm = () => {
-  const form = useForm<SignInFormType>({
+  const form = useForm<SignInSchemaType>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
       email: "",
@@ -26,7 +26,7 @@ const SignInForm = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<SignInFormType> = (data) => {
+  const onSubmit: SubmitHandler<SignInSchemaType> = (data) => {
     console.log(data);
   };
 

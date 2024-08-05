@@ -14,10 +14,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import { SignUpFormType, signUpSchema } from "@/utils/schema/signUp";
+import { SignUpSchemaType, signUpSchema } from "@/utils/schema/signUp";
+import { signUp } from "@/lib/api/signUp";
+import { useRouter } from "next/navigation";
+import { Loader } from "lucide-react";
+import { toast } from "../ui/use-toast";
 
 const SignUpForm = () => {
-  const form = useForm<SignUpFormType>({
+  const router = useRouter();
+  const form = useForm<SignUpSchemaType>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
       username: "",
@@ -26,8 +31,22 @@ const SignUpForm = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<SignUpFormType> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<SignUpSchemaType> = async (data) => {
+    try {
+      const result = await signUp(data);
+      // eslint-disable-next-line no-console
+      console.log("新規ユーザー登録成功:", result);
+      toast({
+        title: "新規ユーザー登録に成功しました",
+      });
+      router.push("/chat");
+    } catch (error: any) {
+      toast({
+        title: "新規ユーザー登録に失敗しました",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -103,8 +122,13 @@ const SignUpForm = () => {
                 type="submit"
                 className="w-full lg:w-1/2 lg:text-lg rounded-full"
                 variant="success"
+                disabled={form.formState.isSubmitting}
               >
-                登録
+                {form.formState.isSubmitting ? (
+                  <Loader className="animate-spin" />
+                ) : (
+                  "登録"
+                )}
               </Button>
             </div>
           </form>
