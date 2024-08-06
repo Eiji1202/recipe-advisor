@@ -22,9 +22,12 @@ import { toast } from "../../../ui/use-toast";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/config/firebase";
 import { Loader } from "lucide-react";
+import { useSignInWithGoogle } from "react-firebase-hooks/auth";
 
 const SignInForm = () => {
   const router = useRouter();
+  const [signInWithGoogle, loading] = useSignInWithGoogle(auth);
+
   const form = useForm<SignInSchemaType>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
@@ -33,6 +36,7 @@ const SignInForm = () => {
     },
   });
 
+  // ログイン
   const onSubmit: SubmitHandler<SignInSchemaType> = async (data) => {
     try {
       await signIn(data);
@@ -45,6 +49,22 @@ const SignInForm = () => {
       toast({
         title: "ログインに失敗しました",
         description: error.message,
+        variant: "destructive",
+      });
+    }
+  };
+
+  // Googleでログイン
+  const handleGoogleSignIn = async () => {
+    try {
+      await signInWithGoogle();
+      toast({
+        title: "ログインに成功しました",
+      });
+      router.push("/chat");
+    } catch (error) {
+      toast({
+        title: "ログインに失敗しました",
         variant: "destructive",
       });
     }
@@ -122,7 +142,8 @@ const SignInForm = () => {
             <Button
               className="w-full lg:w-1/2 lg:text-lg rounded-full flex items-center gap-2"
               variant="outline"
-              disabled={form.formState.isSubmitting}
+              disabled={!!loading}
+              onClick={handleGoogleSignIn}
             >
               <Image
                 src="google.svg"
