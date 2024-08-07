@@ -73,7 +73,7 @@ const config = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       backgroundImage: {
-        'wallpaper-auth': "url('/wallpaper.jpg')",
+        'wallpaper-auth': "url('/wallpaper.webp')",
       },
     },
   },

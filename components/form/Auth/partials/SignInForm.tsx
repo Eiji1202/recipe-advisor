@@ -36,6 +36,12 @@ const SignInForm = () => {
     },
   });
 
+  const {
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    control,
+  } = form;
+
   // ログイン
   const onSubmit: SubmitHandler<SignInSchemaType> = async (data) => {
     try {
@@ -44,7 +50,7 @@ const SignInForm = () => {
         title: "ログインに成功しました",
       });
       await signInWithEmailAndPassword(auth, data.email, data.password);
-      router.push("/chat");
+      router.push("/recipe-advisor");
     } catch (error: any) {
       toast({
         title: "ログインに失敗しました",
@@ -61,7 +67,7 @@ const SignInForm = () => {
       toast({
         title: "ログインに成功しました",
       });
-      router.push("/chat");
+      router.push("/recipe-advisor");
     } catch (error) {
       toast({
         title: "ログインに失敗しました",
@@ -79,10 +85,10 @@ const SignInForm = () => {
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="space-y-4 lg:space-y-6">
               <FormField
-                control={form.control}
+                control={control}
                 name="email"
                 render={({ field }) => (
                   <FormItem>
@@ -94,14 +100,12 @@ const SignInForm = () => {
                         {...field}
                       />
                     </FormControl>
-                    <FormMessage>
-                      {form.formState.errors.email?.message}
-                    </FormMessage>
+                    <FormMessage>{errors.email?.message}</FormMessage>
                   </FormItem>
                 )}
               />
               <FormField
-                control={form.control}
+                control={control}
                 name="password"
                 render={({ field }) => (
                   <FormItem>
@@ -113,9 +117,7 @@ const SignInForm = () => {
                         {...field}
                       />
                     </FormControl>
-                    <FormMessage>
-                      {form.formState.errors.password?.message}
-                    </FormMessage>
+                    <FormMessage>{errors.password?.message}</FormMessage>
                   </FormItem>
                 )}
               />
@@ -125,7 +127,7 @@ const SignInForm = () => {
                 type="submit"
                 className="w-full lg:w-1/2 lg:text-lg rounded-full"
               >
-                {form.formState.isSubmitting ? (
+                {isSubmitting ? (
                   <Loader className="animate-spin" />
                 ) : (
                   <>ログイン</>

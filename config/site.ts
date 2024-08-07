@@ -2,7 +2,7 @@ import { SiteConfig } from "@/types";
 
 
 export const siteConfig: SiteConfig = {
-  name: "RecipeAdviser",
+  name: "RecipeAdvisor",
   description: "冷蔵庫の中にある食材から料理を提案してくれるアプリです",
   url: "http://localhost:3000",
   ogImage: "",
@@ -14,8 +14,11 @@ export const siteConfig: SiteConfig = {
     "Next.js",
     "TypeScript",
     "TailwindCSS",
-    "Supabase",
+    "shadcn/ui",
+    "Firebase",
     "OpenAI API",
+    "ReactHookForm",
+    "Zod",
   ],
   authors: [
     {
