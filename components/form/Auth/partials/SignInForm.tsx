@@ -104,6 +104,7 @@ const SignInForm = () => {
                   </FormItem>
                 )}
               />
+
               <FormField
                 control={control}
                 name="password"
@@ -135,11 +136,13 @@ const SignInForm = () => {
               </Button>
             </div>
           </form>
+
           <div className="flex items-center my-4">
             <div className="flex-grow border-t border-gray-300"></div>
             <span className="mx-4 text-gray-400 text-sm">または</span>
             <div className="flex-grow border-t border-gray-300"></div>
           </div>
+
           <div className="flex justify-center">
             <Button
               className="w-full lg:w-1/2 lg:text-lg rounded-full flex items-center gap-2"
