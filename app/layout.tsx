@@ -45,7 +45,12 @@ export default function RootLayout({
     >
       <body className={cn(murecho.className, "min-h-dvh flex flex-col")}>
         <Header />
-        <main className="flex-1 relative">{children}</main>
+        <main className="flex-1 relative">
+          <div className="absolute inset-0 bg-wallpaper-auth bg-cover bg-center" />
+          <div className="absolute inset-0 flex items-center justify-center">
+            {children}
+          </div>
+        </main>
         <Toaster />
       </body>
     </html>

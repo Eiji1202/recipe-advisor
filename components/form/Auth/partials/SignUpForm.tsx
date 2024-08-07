@@ -33,6 +33,12 @@ const SignUpForm = () => {
     },
   });
 
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = form;
+
   const onSubmit: SubmitHandler<SignUpSchemaType> = async (data) => {
     try {
       await signUp(data);
@@ -40,7 +46,7 @@ const SignUpForm = () => {
         title: "新規ユーザー登録に成功しました",
       });
       await signInWithEmailAndPassword(auth, data.email, data.password);
-      router.push("/chat");
+      router.push("/recipe-advisor");
     } catch (error: any) {
       toast({
         title: "新規ユーザー登録に失敗しました",
@@ -59,10 +65,10 @@ const SignUpForm = () => {
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="space-y-4 lg:space-y-6">
               <FormField
-                control={form.control}
+                control={control}
                 name="username"
                 render={({ field }) => (
                   <FormItem>
@@ -73,14 +79,12 @@ const SignUpForm = () => {
                         {...field}
                       />
                     </FormControl>
-                    <FormMessage>
-                      {form.formState.errors.username?.message}
-                    </FormMessage>
+                    <FormMessage>{errors.username?.message}</FormMessage>
                   </FormItem>
                 )}
               />
               <FormField
-                control={form.control}
+                control={control}
                 name="email"
                 render={({ field }) => (
                   <FormItem>
@@ -92,14 +96,12 @@ const SignUpForm = () => {
                         {...field}
                       />
                     </FormControl>
-                    <FormMessage>
-                      {form.formState.errors.email?.message}
-                    </FormMessage>
+                    <FormMessage>{errors.email?.message}</FormMessage>
                   </FormItem>
                 )}
               />
               <FormField
-                control={form.control}
+                control={control}
                 name="password"
                 render={({ field }) => (
                   <FormItem>
@@ -111,9 +113,7 @@ const SignUpForm = () => {
                         {...field}
                       />
                     </FormControl>
-                    <FormMessage>
-                      {form.formState.errors.password?.message}
-                    </FormMessage>
+                    <FormMessage>{errors.password?.message}</FormMessage>
                   </FormItem>
                 )}
               />
@@ -123,13 +123,9 @@ const SignUpForm = () => {
                 type="submit"
                 className="w-full lg:w-1/2 lg:text-lg rounded-full"
                 variant="success"
-                disabled={form.formState.isSubmitting}
+                disabled={isSubmitting}
               >
-                {form.formState.isSubmitting ? (
-                  <Loader className="animate-spin" />
-                ) : (
-                  <>登録</>
-                )}
+                {isSubmitting ? <Loader className="animate-spin" /> : <>登録</>}
               </Button>
             </div>
           </form>

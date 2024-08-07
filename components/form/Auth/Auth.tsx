@@ -13,15 +13,15 @@ const Auth = () => {
   // ユーザーの認証情報がある場合は投稿一覧ページに置き換える
   useEffect(() => {
     if (user) {
-      router.replace("/chat");
+      router.replace("/recipe-advisor");
     }
   }, [user, router]);
 
   return (
-    <div className="container flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-8">
+    <>
       <SignUpForm />
       <SignInForm />
-    </div>
+    </>
   );
 };
 
