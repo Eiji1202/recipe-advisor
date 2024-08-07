@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { useForm, useFieldArray, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -40,6 +40,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Asterisk, Loader } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 const RecipeInput: React.FC = () => {
   const form = useForm<RecipeInputSchemaType>({
@@ -57,8 +65,10 @@ const RecipeInput: React.FC = () => {
     control,
     handleSubmit,
     setValue,
+    getValues,
     formState: { errors, isSubmitting },
     register,
+    trigger,
   } = form;
 
   const {
@@ -79,31 +89,47 @@ const RecipeInput: React.FC = () => {
     name: "seasonings",
   });
 
-  const onSubmit: SubmitHandler<RecipeInputSchemaType> = (data) => {
-    const filteredData = {
-      ...data,
-      seasonings: data?.seasonings?.filter(
-        (seasoning) => seasoning?.seasoning?.trim() !== ""
-      ),
-    };
+  const [isOpen, setIsOpen] = useState(false);
+  const [formData, setFormData] = useState<RecipeInputSchemaType | null>(null);
 
-    console.log(filteredData);
+  const openModal = async () => {
+    const isValid = await trigger();
+    if (isValid) {
+      const formValues = getValues();
+      const filteredData = {
+        ...formValues,
+        seasonings: formValues?.seasonings?.filter(
+          (seasoning) => seasoning?.seasoning?.trim() !== ""
+        ),
+      };
+
+      setFormData(filteredData);
+      setIsOpen(true);
+    }
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  const onSubmit: SubmitHandler<RecipeInputSchemaType> = () => {
+    console.log(formData);
   };
 
   return (
-    <Card className="w-full max-w-[800px] lg:p-6">
-      <CardHeader>
-        <CardTitle className="text-lg lg:text-2xl text-center">
-          レシピを提案してもらう
-        </CardTitle>
-        <CardDescription className="tlg:text-base flex items-center justify-center">
-          <Asterisk size={18} />
-          は必須項目です
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <Form {...form}>
-          <form onSubmit={handleSubmit(onSubmit)}>
+    <>
+      <Card className="w-full max-w-[800px] lg:p-6">
+        <CardHeader>
+          <CardTitle className="text-lg lg:text-2xl text-center">
+            レシピを提案してもらう
+          </CardTitle>
+          <CardDescription className="tlg:text-base flex items-center justify-center">
+            <Asterisk size={18} />
+            は必須項目です
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
             <div className="space-y-4 lg:space-y-6">
               <FormField
                 control={control}
@@ -325,21 +351,63 @@ const RecipeInput: React.FC = () => {
             </div>
             <div className="flex justify-center mt-6 lg:mt-8">
               <Button
-                type="submit"
                 className="w-full lg:w-1/2 lg:text-lg rounded-full"
-                disabled={isSubmitting}
+                onClick={openModal}
               >
-                {isSubmitting ? (
-                  <Loader className="animate-spin" />
-                ) : (
-                  <>料理を提案してもらう</>
-                )}
+                入力内容の確認
               </Button>
             </div>
-          </form>
-        </Form>
-      </CardContent>
-    </Card>
+          </Form>
+        </CardContent>
+      </Card>
+
+      {/* Modal */}
+      <Dialog
+        open={isOpen}
+        onOpenChange={setIsOpen}
+      >
+        <DialogContent>
+          <DialogTitle className="text-center">入力内容の確認</DialogTitle>
+          <DialogDescription className="text-center">
+            以下の内容で料理を提案しますか？
+          </DialogDescription>
+          <ul className="space-y-2">
+            <li>
+              調理時間:{" "}
+              <span className="font-semibold">{formData?.cookingTime}</span>
+            </li>
+            <li>
+              味のテイスト:{" "}
+              <span className="font-semibold">{formData?.taste}</span>
+            </li>
+            {formData?.ingredients.map((ingredient, index) => (
+              <li key={index}>
+                使いたい食材その{index + 1}:{" "}
+                <span className="font-semibold">{ingredient.ingredient}</span>
+              </li>
+            ))}
+            {formData?.seasonings?.map((seasoning, index) => (
+              <li key={index}>
+                使いたい調味料その{index + 1}:{" "}
+                <span className="font-semibold">{seasoning.seasoning}</span>
+              </li>
+            ))}
+            <li>
+              人数: <span className="font-semibold">{formData?.servings}</span>
+            </li>
+          </ul>
+          <DialogFooter className="sm:gap-2">
+            <Button
+              variant="secondary"
+              onClick={closeModal}
+            >
+              キャンセル
+            </Button>
+            <Button onClick={handleSubmit(onSubmit)}>提案してもらう</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };
 

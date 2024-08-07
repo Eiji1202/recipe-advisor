@@ -83,6 +83,7 @@ const SignUpForm = () => {
                   </FormItem>
                 )}
               />
+
               <FormField
                 control={control}
                 name="email"
@@ -100,6 +101,7 @@ const SignUpForm = () => {
                   </FormItem>
                 )}
               />
+
               <FormField
                 control={control}
                 name="password"
