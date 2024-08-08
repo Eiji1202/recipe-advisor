@@ -39,7 +39,7 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
-import { Asterisk, Loader } from "lucide-react";
+import { Asterisk } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -48,8 +48,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { useRouter } from "next/navigation";
 
 const RecipeInput: React.FC = () => {
+  const router = useRouter();
   const form = useForm<RecipeInputSchemaType>({
     resolver: zodResolver(recipeInputSchema),
     defaultValues: {
@@ -66,7 +68,7 @@ const RecipeInput: React.FC = () => {
     handleSubmit,
     setValue,
     getValues,
-    formState: { errors, isSubmitting },
+    formState: { errors },
     register,
     trigger,
   } = form;
@@ -112,8 +114,46 @@ const RecipeInput: React.FC = () => {
     setIsOpen(false);
   };
 
+  /**
+   * クエリパラメータを作成する
+   *formDataの各要素からundefinedの可能性を排除してオブジェクト形式で返す
+   */
+  const createQueryParams = (formData: RecipeInputSchemaType | null) => {
+    if (!formData) return {};
+
+    const queryParams: Record<string, string> = {};
+
+    if (formData.cookingTime) {
+      queryParams["cookingTime"] = formData.cookingTime;
+    }
+
+    if (formData.taste) {
+      queryParams["taste"] = formData.taste;
+    }
+
+    if (formData.servings) {
+      queryParams["servings"] = formData.servings;
+    }
+
+    if (formData.ingredients && formData.ingredients.length > 0) {
+      queryParams["ingredients"] = formData.ingredients
+        .map((ingredient) => ingredient.ingredient)
+        .join(",");
+    }
+
+    if (formData.seasonings && formData.seasonings.length > 0) {
+      queryParams["seasonings"] = formData.seasonings
+        .map((seasoning) => seasoning.seasoning)
+        .join(",");
+    }
+
+    return queryParams;
+  };
+
   const onSubmit: SubmitHandler<RecipeInputSchemaType> = () => {
-    console.log(formData);
+    const queryParams = createQueryParams(formData);
+    const query = new URLSearchParams(queryParams).toString();
+    router.push(`recipe-advisor/suggestions?${query}`);
   };
 
   return (

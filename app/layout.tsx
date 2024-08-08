@@ -43,11 +43,16 @@ export default function RootLayout({
       lang="ja"
       suppressHydrationWarning
     >
-      <body className={cn(murecho.className, "min-h-dvh flex flex-col")}>
+      <body
+        className={cn(
+          murecho.className,
+          "min-h-dvh flex flex-col overflow-hidden"
+        )}
+      >
         <Header />
         <main className="flex-1 relative">
-          <div className="absolute inset-0 bg-wallpaper-auth bg-cover bg-center" />
-          <div className="absolute inset-0 flex items-center justify-center">
+          <div className="absolute inset-0 bg-wallpaper-auth bg-cover bg-center bg-fixed" />
+          <div className="absolute inset-0 flex items-center justify-center overflow-auto">
             {children}
           </div>
         </main>
