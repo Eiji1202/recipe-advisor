@@ -46,11 +46,10 @@ import {
   DialogDescription,
   DialogFooter,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { useRouter } from "next/navigation";
 
-const RecipeInput: React.FC = () => {
+const SuggestionsForm: React.FC = () => {
   const router = useRouter();
   const form = useForm<RecipeInputSchemaType>({
     resolver: zodResolver(recipeInputSchema),
@@ -451,4 +450,4 @@ const RecipeInput: React.FC = () => {
   );
 };
 
-export default RecipeInput;
+export default SuggestionsForm;

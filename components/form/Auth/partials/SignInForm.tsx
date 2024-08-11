@@ -16,7 +16,7 @@ import { Button } from "../../../ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../../../ui/card";
 import Image from "next/image";
 import { SignInSchemaType, signInSchema } from "@/utils/schema/signIn";
-import { signIn } from "@/lib/api/signIn";
+import { signIn } from "@/lib/api/auth/signIn";
 import { useRouter } from "next/navigation";
 import { toast } from "../../../ui/use-toast";
 import { signInWithEmailAndPassword } from "firebase/auth";
