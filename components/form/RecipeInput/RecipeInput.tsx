@@ -161,7 +161,7 @@ const RecipeInput: React.FC = () => {
       <Card className="w-full max-w-[800px] lg:p-6">
         <CardHeader>
           <CardTitle className="text-lg lg:text-2xl text-center">
-            レシピを提案してもらう
+            料理を提案してもらう
           </CardTitle>
           <CardDescription className="tlg:text-base flex items-center justify-center">
             <Asterisk size={18} />

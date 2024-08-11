@@ -11,11 +11,13 @@ export const recipeInputSchema = z.object({
     .array(z.object({
       ingredient: z.string().min(1, "食材を入力してください")
     }))
-    .nonempty("少なくとも1つの食材を入力してください"),
+    .nonempty("少なくとも1つの食材を入力してください")
+    .max(5, "食材は最大5つまでです"),
   seasonings: z
     .array(z.object({
       seasoning: z.string().optional()
     }))
+    .max(5, "調味料は最大5つまでです")
     .optional(),
   servings: z
     .enum(["1人前", "2人前", "3人前", "4人前", "5人前", "6人前", "7人前", "8人前", "9人前", "10人前"])
