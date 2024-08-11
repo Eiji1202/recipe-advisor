@@ -9,8 +9,8 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
-import { ChatRequestSchemaType } from "@/utils/schema/chat";
-import { suggestionsRecipe } from "@/lib/api/suggestionsRecipe";
+import { SuggestionsSchemaType } from "@/utils/schema/chat";
+import { getRecipeSuggestions } from "@/lib/api/chat/getRecipeSuggestions";
 import { toast } from "../ui/use-toast";
 import { Loader } from "lucide-react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
@@ -60,18 +60,17 @@ const Chat: React.FC = () => {
     const ingredientsArray = ingredients.split(",");
     const seasoningsArray = seasonings ? seasonings.split(",") : [];
 
-    const requestData: ChatRequestSchemaType = {
+    const suggestionRequestData: SuggestionsSchemaType = {
       cookingTime,
       taste,
       ingredients: ingredientsArray as [string, ...string[]],
       seasonings: seasoningsArray,
-      servings,
     };
 
     // レシピ提案を取得
     const fetchRecipeSuggestions = async () => {
       try {
-        const response = await suggestionsRecipe(requestData);
+        const response = await getRecipeSuggestions(suggestionRequestData);
         setRecipes(response);
       } catch (error: any) {
         toast({
@@ -128,7 +127,9 @@ const Chat: React.FC = () => {
                         <RadioGroup
                           value={field.value}
                           onValueChange={field.onChange}
-                          className="flex flex-col gap-4 border border-gray-300 rounded-lg p-4"
+                          className={`flex flex-col gap-4 border border-gray-300 rounded-lg p-4 ${
+                            errors.selectRecipe?.message && "border-destructive"
+                          }`}
                         >
                           {recipes.map((recipe, index) => (
                             <div
@@ -141,7 +142,7 @@ const Chat: React.FC = () => {
                               />
                               <Label
                                 htmlFor={`recipe-${index}`}
-                                className="font-semibold lg:text-lg"
+                                className="font-semibold lg:text-lg hover:cursor-pointer"
                               >
                                 {recipe}
                               </Label>

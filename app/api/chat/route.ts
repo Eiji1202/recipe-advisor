@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
-import { chatRequestSchema, ChatRequestSchemaType } from "@/utils/schema/chat";
+import { suggestionsSchema, SuggestionsSchemaType } from "@/utils/schema/chat";
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
     // リクエストデータのバリデーション
-    const parsedData: ChatRequestSchemaType = chatRequestSchema.parse(body);
+    const parsedData: SuggestionsSchemaType = suggestionsSchema.parse(body);
 
     const response = await axios.post(
       "https://api.openai.com/v1/chat/completions",
@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
 }
 
 // プロンプトを生成する関数
-const generatePrompt = (data: ChatRequestSchemaType) => {
+const generatePrompt = (data: SuggestionsSchemaType) => {
   const { cookingTime, taste, ingredients, seasonings } = data;
 
   let prompt = `私は${cookingTime}で作れる${taste}の料理を探しています。以下の食材を使用してください: ${ingredients.join(", ")}。`;

@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const chatRequestSchema = z.object({
+export const suggestionsSchema = z.object({
   cookingTime: z
     .string()
     .min(1, "調理時間が必要です"),
@@ -14,8 +14,6 @@ export const chatRequestSchema = z.object({
   seasonings: z
     .array(z.string().min(1))
     .max(5, "調味料は最大5つまでです"),
-  servings: z
-    .string().min(1, "何人分が必要です"),
 });
 
-export type ChatRequestSchemaType = z.infer<typeof chatRequestSchema>;
+export type SuggestionsSchemaType = z.infer<typeof suggestionsSchema>;
