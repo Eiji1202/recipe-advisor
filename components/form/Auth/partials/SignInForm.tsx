@@ -68,9 +68,10 @@ const SignInForm = () => {
         title: "ログインに成功しました",
       });
       router.push("/recipe-advisor");
-    } catch (error) {
+    } catch (error: any) {
       toast({
         title: "ログインに失敗しました",
+        description: error.message,
         variant: "destructive",
       });
     }

@@ -23,9 +23,10 @@ const Header = () => {
         title: "ログアウトしました",
       });
       router.push("/");
-    } catch {
+    } catch (error: any) {
       toast({
         title: "ログアウトに失敗しました",
+        description: error.message,
         variant: "destructive",
       });
     }
