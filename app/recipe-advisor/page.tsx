@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import SuggestionsForm from "@/components/form/SuggestionsForm/SuggestionsForm";
+import SuggestionsForDishNameForm from "@/components/form/SuggestionsForDishNameForm";
 
 export const metadata: Metadata = {
   title: "Form",
@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function RecipeAdvisorPage() {
   return (
     <div className="container flex items-center justify-center">
-      <SuggestionsForm />
+      <SuggestionsForDishNameForm />
     </div>
   );
 }
