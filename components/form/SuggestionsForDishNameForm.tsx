@@ -2,14 +2,6 @@
 
 import React, { useState } from "react";
 import { useForm, useFieldArray, SubmitHandler } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  CookingTime,
-  recipeInputSchema,
-  RecipeInputSchemaType,
-  Servings,
-  Taste,
-} from "@/utils/schema/recipeInput";
 import {
   cookingTimeOptions,
   tasteOptions,
@@ -49,17 +41,55 @@ import {
 } from "@/components/ui/dialog";
 import { useRouter } from "next/navigation";
 
-const SuggestionsForm: React.FC = () => {
+export type CookingTime = "10分以内" | "20分以内" | "30分以内" | "それ以上";
+export type Taste = "和風" | "洋風" | "中華風" | "韓国風" | "エスニック風";
+export type Servings =
+  | "1人前"
+  | "2人前"
+  | "3人前"
+  | "4人前"
+  | "5人前"
+  | "6人前"
+  | "7人前"
+  | "8人前"
+  | "9人前"
+  | "10人前";
+
+export type SuggestionsForDishNameFormType = {
+  cookingTime: CookingTime | null;
+  taste: Taste | null;
+  ingredients: { ingredient: string }[];
+  seasonings?: { seasoning?: string }[];
+  servings: Servings | null;
+};
+
+const validations = {
+  cookingTime: {
+    required: "調理時間を選択してください",
+  },
+  taste: {
+    required: "味のテイストを選択してください",
+  },
+  ingredient: {
+    required: "食材を入力してください",
+  },
+  servings: {
+    required: "何人前か選択してください",
+  },
+};
+
+const defaultValues = {
+  cookingTime: null,
+  taste: null,
+  ingredients: [{ ingredient: "" }],
+  seasonings: [{ seasoning: "" }],
+  servings: null,
+};
+
+const SuggestionsForDishNameForm: React.FC = () => {
   const router = useRouter();
-  const form = useForm<RecipeInputSchemaType>({
-    resolver: zodResolver(recipeInputSchema),
-    defaultValues: {
-      cookingTime: undefined,
-      taste: undefined,
-      ingredients: [{ ingredient: "" }],
-      seasonings: [{ seasoning: "" }],
-      servings: undefined,
-    },
+  const form = useForm<SuggestionsForDishNameFormType>({
+    defaultValues,
   });
 
   const {
@@ -91,7 +121,8 @@ const SuggestionsForm: React.FC = () => {
   });
 
   const [isOpen, setIsOpen] = useState(false);
-  const [formData, setFormData] = useState<RecipeInputSchemaType | null>(null);
+  const [formData, setFormData] =
+    useState<SuggestionsForDishNameFormType | null>(null);
 
   const openModal = async () => {
     const isValid = await trigger();
@@ -117,7 +148,9 @@ const SuggestionsForm: React.FC = () => {
    * クエリパラメータを作成する
    *formDataの各要素からundefinedの可能性を排除してオブジェクト形式で返す
    */
-  const createQueryParams = (formData: RecipeInputSchemaType | null) => {
+  const createQueryParams = (
+    formData: SuggestionsForDishNameFormType | null
+  ) => {
     if (!formData) return {};
 
     const queryParams: Record<string, string> = {};
@@ -149,8 +182,9 @@ const SuggestionsForm: React.FC = () => {
     return queryParams;
   };
 
-  const onSubmit: SubmitHandler<RecipeInputSchemaType> = () => {
+  const onSubmit: SubmitHandler<SuggestionsForDishNameFormType> = () => {
     const queryParams = createQueryParams(formData);
+
     const query = new URLSearchParams(queryParams).toString();
     router.push(`recipe-advisor/suggestions?${query}`);
   };
@@ -173,7 +207,8 @@ const SuggestionsForm: React.FC = () => {
               <FormField
                 control={control}
                 name="cookingTime"
-                render={({ field }) => (
+                rules={validations.cookingTime}
+                render={() => (
                   <FormItem>
                     <FormLabel className="lg:text-lg flex items-center">
                       調理時間
@@ -187,7 +222,6 @@ const SuggestionsForm: React.FC = () => {
                         onValueChange={(value: CookingTime) =>
                           setValue("cookingTime", value)
                         }
-                        defaultValue={field.value}
                       >
                         <SelectTrigger className="w-full">
                           <SelectValue placeholder="選択してください" />
@@ -212,7 +246,8 @@ const SuggestionsForm: React.FC = () => {
               <FormField
                 control={control}
                 name="taste"
-                render={({ field }) => (
+                rules={validations.taste}
+                render={() => (
                   <FormItem>
                     <FormLabel className="lg:text-lg flex items-center">
                       味のテイスト
@@ -226,7 +261,6 @@ const SuggestionsForm: React.FC = () => {
                         onValueChange={(value: Taste) =>
                           setValue("taste", value)
                         }
-                        defaultValue={field.value}
                       >
                         <SelectTrigger className="w-full">
                           <SelectValue placeholder="選択してください" />
@@ -269,7 +303,10 @@ const SuggestionsForm: React.FC = () => {
                           <FormControl>
                             <Input
                               {...register(
-                                `ingredients.${index}.ingredient` as const
+                                `ingredients.${index}.ingredient` as const,
+                                {
+                                  required: validations.ingredient.required,
+                                }
                               )}
                               placeholder="食材を入力してください"
                               className="w-full mr-2"
@@ -352,7 +389,8 @@ const SuggestionsForm: React.FC = () => {
               <FormField
                 control={control}
                 name="servings"
-                render={({ field }) => (
+                rules={validations.servings}
+                render={() => (
                   <FormItem>
                     <FormLabel className="lg:text-lg flex items-center">
                       人数
@@ -366,7 +404,6 @@ const SuggestionsForm: React.FC = () => {
                         onValueChange={(value: Servings) =>
                           setValue("servings", value)
                         }
-                        defaultValue={field.value}
                       >
                         <SelectTrigger className="w-full">
                           <SelectValue placeholder="選択してください" />
@@ -450,4 +487,4 @@ const SuggestionsForm: React.FC = () => {
   );
 };
 
-export default SuggestionsForm;
+export default SuggestionsForDishNameForm;
