@@ -9,7 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
-import { SuggestionsSchemaType } from "@/utils/schema/chat";
+import { RecipeSuggestionsSchemaType } from "@/utils/schema/chat/recipeSuggestions";
 import { getRecipeSuggestions } from "@/lib/api/chat/getRecipeSuggestions";
 import { toast } from "../ui/use-toast";
 import { Loader } from "lucide-react";
@@ -60,7 +60,7 @@ const Chat: React.FC = () => {
     const ingredientsArray = ingredients.split(",");
     const seasoningsArray = seasonings ? seasonings.split(",") : [];
 
-    const suggestionRequestData: SuggestionsSchemaType = {
+    const suggestionRequestData: RecipeSuggestionsSchemaType = {
       cookingTime,
       taste,
       ingredients: ingredientsArray as [string, ...string[]],

@@ -1,7 +1,7 @@
 import axios from "axios";
-import { SuggestionsSchemaType } from "@/utils/schema/chat";
+import { RecipeSuggestionsSchemaType } from "@/utils/schema/chat/recipeSuggestions";
 
-export const getRecipeSuggestions = async (requestData: SuggestionsSchemaType) => {
+export const getRecipeSuggestions = async (requestData: RecipeSuggestionsSchemaType) => {
   try {
     const response = await axios.post("/api/chat", requestData);
     return response.data;

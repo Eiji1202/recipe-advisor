@@ -3,7 +3,7 @@ import { collection, addDoc, query, where, getDocs } from 'firebase/firestore';
 import { NextResponse, NextRequest } from 'next/server';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import bcrypt from 'bcrypt';
-import { signUpSchema, SignUpSchemaType } from '@/utils/schema/signUp';
+import { signUpSchema, SignUpSchemaType } from '@/utils/schema/auth/signUp';
 
 // 新規ユーザー登録
 export async function POST(request: NextRequest) {

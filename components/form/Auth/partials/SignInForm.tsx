@@ -15,7 +15,7 @@ import { Input } from "../../../ui/input";
 import { Button } from "../../../ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../../../ui/card";
 import Image from "next/image";
-import { SignInSchemaType, signInSchema } from "@/utils/schema/signIn";
+import { SignInSchemaType, signInSchema } from "@/utils/schema/auth/signIn";
 import { signIn } from "@/lib/api/auth/signIn";
 import { useRouter } from "next/navigation";
 import { toast } from "../../../ui/use-toast";

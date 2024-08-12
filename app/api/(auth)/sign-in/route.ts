@@ -2,7 +2,7 @@ import { db } from '@/config/firebase';
 import { NextRequest, NextResponse } from 'next/server';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import bcrypt from 'bcrypt';
-import { signInSchema, SignInSchemaType } from '@/utils/schema/signIn';
+import { signInSchema, SignInSchemaType } from '@/utils/schema/auth/signIn';
 
 // ログイン
 export async function POST(request: NextRequest) {
