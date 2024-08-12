@@ -14,7 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "../../../ui/input";
 import { Button } from "../../../ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../../../ui/card";
-import { SignUpSchemaType, signUpSchema } from "@/utils/schema/signUp";
+import { SignUpSchemaType, signUpSchema } from "@/utils/schema/auth/signUp";
 import { signUp } from "@/lib/api/auth/signUp";
 import { useRouter } from "next/navigation";
 import { Loader } from "lucide-react";

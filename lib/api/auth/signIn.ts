@@ -1,4 +1,4 @@
-import { SignInSchemaType } from '@/utils/schema/signIn';
+import { SignInSchemaType } from '@/utils/schema/auth/signIn';
 import axios from 'axios';
 
 // axiosインスタンスの作成
