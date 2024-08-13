@@ -3,10 +3,10 @@ import { RecipeSuggestionsSchemaType } from "@/utils/schema/chat/recipeSuggestio
 
 export const getRecipeSuggestions = async (requestData: RecipeSuggestionsSchemaType) => {
   try {
-    const response = await axios.post("/api/chat", requestData);
+    const response = await axios.post("/api/chat/recipe-suggestions", requestData);
     return response.data;
   } catch (error: any) {
-    console.error("レシピ提案の取得中にエラーが発生しました:", error);
-    throw new Error("レシピ提案の取得に失敗しました");
+    console.error("料理名の取得中にエラーが発生しました:", error);
+    throw new Error("料理名の取得に失敗しました");
   }
 };

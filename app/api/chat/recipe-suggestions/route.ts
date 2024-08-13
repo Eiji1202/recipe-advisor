@@ -53,7 +53,7 @@ const generatePromptForRecipeSuggestions = (data: RecipeSuggestionsSchemaType) =
     prompt += ` また、以下の調味料を使用してください: ${seasonings.join(", ")}。`;
   }
 
-  prompt += ` 異なる3つの料理名だけをカンマ区切りで提案してください。料理名のみです。`
+  prompt += ` 異なる3つの料理名だけをカンマ区切り（句読点はNG）で提案してください。料理名のみです。`
 
   return prompt;
 };
