@@ -93,7 +93,7 @@ const Chat: React.FC = () => {
 
     try {
       const response = await getRecipeDetails(detailsRequestData);
-      setDetails(response.parsedContent);
+      setDetails(response.recipeDetails);
     } catch (error: any) {
       toast({
         title: "レシピの取得に失敗しました",

@@ -12,4 +12,5 @@ export type RecipeDetails = {
   ingredients: Ingredient[];
   process: string[];
   point: string;
+  imageUrl: string;
 };
