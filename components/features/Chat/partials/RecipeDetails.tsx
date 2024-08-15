@@ -11,6 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { RecipeDetails as RecipeDetailsType } from "@/types/cooking";
+import Image from "next/image";
 
 type Props = {
   details: RecipeDetailsType;
@@ -28,6 +29,13 @@ export const RecipeDetails: React.FC<Props> = (data) => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
+        <Image
+          src={details.imageUrl}
+          alt={details.recipeName}
+          width={512}
+          height={512}
+          className="w-full h-auto object-cover rounded-xl"
+        />
         <Table>
           <TableHeader>
             <TableRow>

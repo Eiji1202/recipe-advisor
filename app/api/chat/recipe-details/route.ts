@@ -29,9 +29,34 @@ export async function POST(request: NextRequest) {
     );
 
     const content = response.data.choices[0].message.content;
-    const parsedContent: RecipeDetails = parseRecipeDetailsContent(content);
+    const parsedContent = parseRecipeDetailsContent(content);
 
-    return NextResponse.json({ parsedContent });
+    console.log(generatePromptForRecipeImage(parsedData.recipeName))
+
+    // 料理の画像を生成
+    const imageResponse = await axios.post(
+      "https://api.openai.com/v1/images/generations",
+      {
+        prompt: generatePromptForRecipeImage(parsedData.recipeName),
+        n: 1,
+        size: "512x512",
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`,
+        },
+      }
+    );
+
+    const imageUrl = imageResponse.data.data[0].url;
+
+    const recipeDetails: RecipeDetails = {
+      ...parsedContent, imageUrl
+    }
+
+    // レスポンスに料理の詳細と画像URLを含めて返す
+    return NextResponse.json({ recipeDetails });
   } catch (error: any) {
     return NextResponse.json(
       { error: error.message || "サーバーエラーが発生しました" },
@@ -40,7 +65,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// プロンプトを生成する関数
+// レシピの詳細を取得するためのプロンプトを生成する関数
 const generatePromptForRecipeDetails = (data: RecipeDetailsSchemaType) => {
   return `
   私は${data.servings}分の${data.recipeName}のレシピが知りたいです。以下のフォーマットで詳細を教えてください。
@@ -101,4 +126,12 @@ const parseRecipeDetailsContent = (content: string) => {
     process,
     point,
   };
+};
+
+// 料理画像を取得するためのプロンプトを生成する関数
+const generatePromptForRecipeImage = (recipeName: string) => {
+  return `
+  Create an image of ${recipeName} on a simple white plate with a plain white background.
+  No characters, illustrations, or additional items should be included. The focus should be on the dish itself.
+  `;
 };
