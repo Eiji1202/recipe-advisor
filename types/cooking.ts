@@ -12,5 +12,5 @@ export type RecipeDetails = {
   ingredients: Ingredient[];
   process: string[];
   point: string;
-  imageUrl: string;
+  // imageUrl: string; // TODO: 画像生成の実装を復活させる場合コメントアウト解除
 };

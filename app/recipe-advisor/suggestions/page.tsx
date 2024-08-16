@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function SuggestionsPage() {
   return (
-    <div className="container flex items-center justify-center">
+    <div className="container flex items-center justify-center py-8 min-h-full">
       <Chat />
     </div>
   );

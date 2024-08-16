@@ -29,31 +29,30 @@ export async function POST(request: NextRequest) {
     );
 
     const content = response.data.choices[0].message.content;
-    const parsedContent = parseRecipeDetailsContent(content);
+    const recipeDetails = parseRecipeDetailsContent(content);
 
-    console.log(generatePromptForRecipeImage(parsedData.recipeName))
-
+    // TODO: 画像生成の実装を復活させる場合コメントアウト解除
     // 料理の画像を生成
-    const imageResponse = await axios.post(
-      "https://api.openai.com/v1/images/generations",
-      {
-        prompt: generatePromptForRecipeImage(parsedData.recipeName),
-        n: 1,
-        size: "512x512",
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`,
-        },
-      }
-    );
+    // const imageResponse = await axios.post(
+    //   "https://api.openai.com/v1/images/generations",
+    //   {
+    //     prompt: generatePromptForRecipeImage(parsedData.recipeName),
+    //     n: 1,
+    //     size: "512x512",
+    //   },
+    //   {
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       "Authorization": `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`,
+    //     },
+    //   }
+    // );
 
-    const imageUrl = imageResponse.data.data[0].url;
+    // const imageUrl = imageResponse.data.data[0].url;
 
-    const recipeDetails: RecipeDetails = {
-      ...parsedContent, imageUrl
-    }
+    // const recipeDetails: RecipeDetails = {
+    //   ...parsedContent, imageUrl
+    // }
 
     // レスポンスに料理の詳細と画像URLを含めて返す
     return NextResponse.json({ recipeDetails });
@@ -128,10 +127,11 @@ const parseRecipeDetailsContent = (content: string) => {
   };
 };
 
+// TODO: 画像生成の実装を復活させる場合コメントアウト解除
 // 料理画像を取得するためのプロンプトを生成する関数
-const generatePromptForRecipeImage = (recipeName: string) => {
-  return `
-  Create an image of ${recipeName} on a simple white plate with a plain white background.
-  No characters, illustrations, or additional items should be included. The focus should be on the dish itself.
-  `;
-};
+// const generatePromptForRecipeImage = (recipeName: string) => {
+//   return `
+//   Create an image of ${recipeName} on a simple white plate with a plain white background.
+//   No characters, illustrations, or additional items should be included. The focus should be on the dish itself.
+//   `;
+// };
