@@ -7,10 +7,19 @@ type Ingredient = {
   quantity: string;
 };
 
-export type RecipeDetails = {
+export type RecipeDetailsType = {
   recipeName: string;
   ingredients: Ingredient[];
   process: string[];
   point: string;
   // imageUrl: string; // TODO: 画像生成の実装を復活させる場合コメントアウト解除
+};
+
+export type SaveRecipeType = {
+  recipeName: string;
+  ingredients: Ingredient[];
+  process: string[];
+  point: string;
+  servings: Servings;
+  taste: Taste;
 };

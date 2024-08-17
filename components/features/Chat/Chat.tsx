@@ -11,14 +11,15 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { getRecipeDetails } from "@/lib/api/chat/getRecipeDetails";
 import {
   CookingTime,
-  RecipeDetails as RecipeDetailsType,
+  RecipeDetailsType,
+  SaveRecipeType,
   Servings,
   Taste,
 } from "@/types/cooking";
 import { RecipeDetailsSchemaType } from "@/utils/schema/chat/recipeDetails";
 import RecipeSuggestions from "./partials/RecipeSuggestions";
 import { RecipeDetails } from "./partials/RecipeDetails";
-
+import { saveRecipe } from "@/lib/api/chat/saveRecipe";
 export type SelectRecipeType = {
   selectRecipe: string;
 };
@@ -39,6 +40,8 @@ const Chat: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [details, setDetails] = useState<RecipeDetailsType | null>(null);
   const [step, setStep] = useState<number>(1);
+  const [isSaving, setIsSaving] = useState<boolean>(false);
+  const [isSaved, setIsSaved] = useState<boolean>(false);
 
   const form = useForm<SelectRecipeType>({
     defaultValues,
@@ -105,6 +108,26 @@ const Chat: React.FC = () => {
     }
   };
 
+  // レシピを保存
+  const handleSaveRecipe = async (recipeData: SaveRecipeType) => {
+    setIsSaving(true);
+    try {
+      await saveRecipe(recipeData);
+      toast({
+        title: "レシピを保存しました",
+      });
+      setIsSaved(true);
+    } catch (error: any) {
+      toast({
+        title: "レシピの保存に失敗しました",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   return (
     <Card className="relative w-full max-w-[800px] min-h-[320px] lg:p-6">
       {isLoading && (
@@ -131,6 +154,9 @@ const Chat: React.FC = () => {
         <RecipeDetails
           details={details}
           servings={servings}
+          onSubmit={() => handleSaveRecipe({ ...details, servings, taste })}
+          isSaving={isSaving}
+          isSaved={isSaved}
         />
       )}
     </Card>
