@@ -58,10 +58,8 @@ const SignUpForm = () => {
 
   return (
     <Card className="w-full lg:p-6">
-      <CardHeader>
-        <CardTitle className="text-lg lg:text-2xl text-center">
-          新規ユーザー登録
-        </CardTitle>
+      <CardHeader className="text-center">
+        <CardTitle className="text-lg lg:text-2xl">新規ユーザー登録</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>

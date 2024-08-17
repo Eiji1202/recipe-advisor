@@ -11,6 +11,7 @@ export async function POST(request: NextRequest) {
     const formattedRecipeName = `${data.recipeName}（${data.servings}）`;
 
     const recipeData = {
+      uid: data.uid,
       recipeName: formattedRecipeName,
       ingredients: data.ingredients,
       process: data.process,

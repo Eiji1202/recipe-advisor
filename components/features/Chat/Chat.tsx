@@ -20,6 +20,7 @@ import { RecipeDetailsSchemaType } from "@/utils/schema/chat/recipeDetails";
 import RecipeSuggestions from "./partials/RecipeSuggestions";
 import { RecipeDetails } from "./partials/RecipeDetails";
 import { saveRecipe } from "@/lib/api/chat/saveRecipe";
+import { auth } from "@/config/firebase";
 export type SelectRecipeType = {
   selectRecipe: string;
 };
@@ -36,6 +37,7 @@ const Chat: React.FC = () => {
   const ingredients = searchParams.get("ingredients") as string;
   const seasonings = searchParams.get("seasonings") as string;
   const servings = searchParams.get("servings") as Servings;
+  const [uid, setUid] = useState<string | null>(null);
   const [recipes, setRecipes] = useState<string[] | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [details, setDetails] = useState<RecipeDetailsType | null>(null);
@@ -49,10 +51,24 @@ const Chat: React.FC = () => {
 
   useEffect(() => {
     setIsLoading(true);
+    const currentUser = auth.currentUser;
+    if (currentUser) {
+      setUid(currentUser.uid);
+    } else {
+      toast({
+        title: "ユーザー情報の取得に失敗しました",
+        variant: "destructive",
+      });
+      router.back();
+    }
+
     // 必須のクエリパラメータが不足している場合、前のページに戻る
     if (!cookingTime || !taste || !ingredients || !servings) {
+      toast({
+        title: "クエリパラメータが不足しています",
+        variant: "destructive",
+      });
       router.back();
-      return;
     }
 
     // クエリパラメータを適切な形式に変換する
@@ -129,7 +145,7 @@ const Chat: React.FC = () => {
   };
 
   return (
-    <Card className="relative w-full max-w-[800px] min-h-[320px] lg:p-6">
+    <Card className="w-full max-w-[800px] min-h-[320px] lg:p-6">
       {isLoading && (
         <div className="absolute inset-0 flex justify-center items-center gap-2 text-muted-foreground">
           <Loader
@@ -154,7 +170,14 @@ const Chat: React.FC = () => {
         <RecipeDetails
           details={details}
           servings={servings}
-          onSubmit={() => handleSaveRecipe({ ...details, servings, taste })}
+          onSubmit={() =>
+            handleSaveRecipe({
+              ...details,
+              servings,
+              taste,
+              uid: uid as string,
+            })
+          }
           isSaving={isSaving}
           isSaved={isSaved}
         />
