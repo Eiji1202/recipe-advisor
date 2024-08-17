@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -10,16 +10,40 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { RecipeDetails as RecipeDetailsType } from "@/types/cooking";
+import { RecipeDetailsType } from "@/types/cooking";
+import { Loader } from "lucide-react";
+import { useRouter } from "next/navigation";
 // import Image from "next/image";
 
 type Props = {
   details: RecipeDetailsType;
   servings: string;
+  isSaving: boolean;
+  isSaved: boolean;
+  onSubmit: () => void;
 };
 
 export const RecipeDetails: React.FC<Props> = (data) => {
-  const { details, servings } = data;
+  const { details, servings, isSaving, isSaved, onSubmit } = data;
+
+  const router = useRouter();
+
+  const handleBack = () => {
+    router.push("/recipe-advisor");
+  };
+
+  const getLabel = () => {
+    switch (true) {
+      case isSaving:
+        return <Loader className="animate-spin" />;
+      case isSaved:
+        return <>保存済み</>;
+      default:
+        return <>レシピを保存する</>;
+    }
+  };
+
+  const buttonLabel = getLabel();
 
   return (
     <>
@@ -73,12 +97,20 @@ export const RecipeDetails: React.FC<Props> = (data) => {
           <p className="font-semibold lg:text-lg">ポイント</p>
           <p>{details.point}</p>
         </div>
-        <div className="flex justify-center mt-6 lg:mt-8">
+        <div className="flex flex-col-reverse lg:flex-row justify-center gap-3 lg:gap-6 mt-6 lg:mt-8">
           <Button
-            type="submit"
-            className="w-full lg:w-1/2 lg:text-lg rounded-full"
+            onClick={handleBack}
+            variant="outline"
+            className="w-full lg:text-lg rounded-full"
           >
-            レシピを保存する
+            戻る
+          </Button>
+          <Button
+            className="w-full lg:text-lg rounded-full"
+            onClick={onSubmit}
+            disabled={isSaving || isSaved}
+          >
+            {buttonLabel}
           </Button>
         </div>
       </CardContent>

@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function RecipeAdvisorPage() {
   return (
-    <div className="container flex items-center justify-center py-8 min-h-full">
+    <div className="container flex items-center justify-center py-8">
       <SuggestionsForDishNameForm />
     </div>
   );
