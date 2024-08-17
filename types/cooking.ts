@@ -16,6 +16,7 @@ export type RecipeDetailsType = {
 };
 
 export type SaveRecipeType = {
+  uid: string
   recipeName: string;
   ingredients: Ingredient[];
   process: string[];

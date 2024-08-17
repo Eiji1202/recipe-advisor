@@ -47,8 +47,8 @@ export const RecipeDetails: React.FC<Props> = (data) => {
 
   return (
     <>
-      <CardHeader>
-        <CardTitle className="text-lg lg:text-2xl text-center">
+      <CardHeader className="text-center">
+        <CardTitle className="text-lg lg:text-2xl">
           {details.recipeName}
         </CardTitle>
       </CardHeader>
@@ -100,7 +100,7 @@ export const RecipeDetails: React.FC<Props> = (data) => {
         <div className="flex flex-col-reverse lg:flex-row justify-center gap-3 lg:gap-6 mt-6 lg:mt-8">
           <Button
             onClick={handleBack}
-            variant="outline"
+            variant="secondary"
             className="w-full lg:text-lg rounded-full"
           >
             戻る

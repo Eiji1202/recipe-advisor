@@ -35,13 +35,9 @@ const RecipeSuggestions: React.FC<Props> = (props) => {
 
   return (
     <>
-      <CardHeader>
-        <CardTitle className="text-lg lg:text-2xl text-center">
-          料理を決定する
-        </CardTitle>
-        <CardDescription className="text-center">
-          以下から作る料理を選択してください
-        </CardDescription>
+      <CardHeader className="text-center">
+        <CardTitle className="text-lg lg:text-2xl">料理を決定する</CardTitle>
+        <CardDescription>以下から作る料理を選択してください</CardDescription>
       </CardHeader>
       <CardContent>
         <form
