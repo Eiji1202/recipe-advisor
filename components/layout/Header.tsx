@@ -35,22 +35,18 @@ const Header = () => {
   return (
     <header className="h-16 border-b flex items-center sticky top-0 z-10 bg-white">
       <div className="container flex items-center justify-between">
-        <h1 className="font-bold text-2xl">{siteConfig.name}</h1>
+        <h1 className="font-bold text-2xl">
+          <Link href="/recipe-advisor">{siteConfig.name}</Link>
+        </h1>
         {isSignedIn && (
-          <ul className="flex items-center gap-4">
+          <ul className="flex items-center gap-4 lg:gap-6">
             <li>
-              <Link href="/a">MENU</Link>
-            </li>
-            <li>
-              <Link href="/b">MENU</Link>
-            </li>
-            <li>
-              <Link href="/c">MENU</Link>
+              <Link href="/recipe/list">レシピ一覧</Link>
             </li>
             <li>
               <Button
                 onClick={logOut}
-                variant="outline"
+                variant="secondary"
               >
                 ログアウト
               </Button>
