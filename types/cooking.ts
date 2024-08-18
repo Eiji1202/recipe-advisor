@@ -24,3 +24,5 @@ export type SaveRecipeType = {
   servings: Servings;
   taste: Taste;
 };
+
+export type RecipeListType = (SaveRecipeType & { id: string })[];

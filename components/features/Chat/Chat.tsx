@@ -21,6 +21,7 @@ import RecipeSuggestions from "./partials/RecipeSuggestions";
 import { RecipeDetails } from "./partials/RecipeDetails";
 import { saveRecipe } from "@/lib/api/chat/saveRecipe";
 import { auth } from "@/config/firebase";
+import { User } from "firebase/auth";
 export type SelectRecipeType = {
   selectRecipe: string;
 };
@@ -37,7 +38,7 @@ const Chat: React.FC = () => {
   const ingredients = searchParams.get("ingredients") as string;
   const seasonings = searchParams.get("seasonings") as string;
   const servings = searchParams.get("servings") as Servings;
-  const [uid, setUid] = useState<string | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [recipes, setRecipes] = useState<string[] | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [details, setDetails] = useState<RecipeDetailsType | null>(null);
@@ -53,7 +54,7 @@ const Chat: React.FC = () => {
     setIsLoading(true);
     const currentUser = auth.currentUser;
     if (currentUser) {
-      setUid(currentUser.uid);
+      setUser(currentUser);
     } else {
       toast({
         title: "ユーザー情報の取得に失敗しました",
@@ -175,7 +176,7 @@ const Chat: React.FC = () => {
               ...details,
               servings,
               taste,
-              uid: uid as string,
+              uid: user?.uid as string,
             })
           }
           isSaving={isSaving}
