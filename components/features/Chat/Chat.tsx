@@ -11,7 +11,7 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { getRecipeDetails } from "@/lib/api/chat/getRecipeDetails";
 import {
   CookingTime,
-  RecipeDetailsType,
+  RecipeDetailsTypeForChat,
   SaveRecipeType,
   Servings,
   Taste,
@@ -41,7 +41,7 @@ const Chat: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [recipes, setRecipes] = useState<string[] | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [details, setDetails] = useState<RecipeDetailsType | null>(null);
+  const [details, setDetails] = useState<RecipeDetailsTypeForChat | null>(null);
   const [step, setStep] = useState<number>(1);
   const [isSaving, setIsSaving] = useState<boolean>(false);
   const [isSaved, setIsSaved] = useState<boolean>(false);

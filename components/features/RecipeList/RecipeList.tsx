@@ -25,6 +25,8 @@ const RecipeList: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [recipes, setRecipes] = useState<RecipeListType | []>([]);
 
+  console.log(recipes);
+
   useEffect(() => {
     const currentUser = auth.currentUser;
     if (currentUser) {
@@ -79,7 +81,7 @@ const RecipeList: React.FC = () => {
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="和風">
-          <TabsList className="grid w-full lg:grid-cols-5 overflow-auto">
+          <TabsList className="grid w-full md:grid-cols-5 overflow-auto">
             {Object.keys(categorizedRecipes).map((taste) => (
               <TabsTrigger
                 key={taste}
@@ -109,7 +111,10 @@ const RecipeList: React.FC = () => {
                     categorizedRecipes[taste as Taste].map((recipe) => (
                       <TableRow key={recipe.id}>
                         <TableCell className="font-medium flex items-center justify-between">
-                          <Link href={`/recipe/list/${recipe.id}`}>
+                          <Link
+                            href={`/recipe/list/${recipe.id}`}
+                            className="underline underline-offset-4 hover:opacity-70 transition-opacity"
+                          >
                             {recipe.recipeName}
                           </Link>
                           <Button

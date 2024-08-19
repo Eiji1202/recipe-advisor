@@ -10,13 +10,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { RecipeDetailsType } from "@/types/cooking";
+import { RecipeDetailsTypeForChat } from "@/types/cooking";
 import { Loader } from "lucide-react";
 import { useRouter } from "next/navigation";
 // import Image from "next/image";
 
 type Props = {
-  details: RecipeDetailsType;
+  details: RecipeDetailsTypeForChat;
   servings: string;
   isSaving: boolean;
   isSaved: boolean;

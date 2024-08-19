@@ -1,4 +1,10 @@
 import Auth from "@/components/form/Auth/Auth";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "認証",
+  description: "ログインや新規登録を行います",
+};
 
 export default function AuthPage() {
   return (

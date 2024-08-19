@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
       ...doc.data() as SaveRecipeType
     }));
 
-    return NextResponse.json(recipes, { status: 200 });
+    return NextResponse.json(recipes);
   } catch (error: any) {
     console.error("レシピ一覧の取得中にエラーが発生しました", error);
     return NextResponse.json({ error: "レシピ一覧の取得に失敗しました" }, { status: 500 });
