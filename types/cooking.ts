@@ -7,7 +7,7 @@ type Ingredient = {
   quantity: string;
 };
 
-export type RecipeDetailsType = {
+export type RecipeDetailsTypeForChat = {
   recipeName: string;
   ingredients: Ingredient[];
   process: string[];
@@ -25,4 +25,13 @@ export type SaveRecipeType = {
   taste: Taste;
 };
 
-export type RecipeListType = (SaveRecipeType & { id: string })[];
+export type RecipeDetailsTypeForView = {
+  uid: string
+  recipeName: string;
+  ingredients: Ingredient[];
+  process: string[];
+  point: string;
+  taste: Taste;
+};
+
+export type RecipeListType = (RecipeDetailsTypeForView & { id: string })[];

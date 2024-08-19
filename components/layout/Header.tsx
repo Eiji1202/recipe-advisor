@@ -41,7 +41,12 @@ const Header = () => {
         {isSignedIn && (
           <ul className="flex items-center gap-4 lg:gap-6">
             <li>
-              <Link href="/recipe/list">レシピ一覧</Link>
+              <Button
+                asChild
+                variant="outline"
+              >
+                <Link href="/recipe/list">レシピ一覧</Link>
+              </Button>
             </li>
             <li>
               <Button

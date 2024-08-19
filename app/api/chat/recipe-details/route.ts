@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
 import { recipeDetailsSchema, RecipeDetailsSchemaType } from "@/utils/schema/chat/recipeDetails";
-import { RecipeDetailsType } from "@/types/cooking";
+import { RecipeDetailsTypeForChat } from "@/types/cooking";
 
 // 2回目のリクエスト: 料理の詳細を取得
 export async function POST(request: NextRequest) {
@@ -90,10 +90,10 @@ const generatePromptForRecipeDetails = (data: RecipeDetailsSchemaType) => {
 const parseRecipeDetailsContent = (content: string) => {
   const sections = content.split("###").map(section => section.trim());
 
-  let recipeName: RecipeDetailsType["recipeName"] = "";
-  let ingredients: RecipeDetailsType["ingredients"] = [];
-  let process: RecipeDetailsType["process"] = [];
-  let point: RecipeDetailsType["point"] = "";
+  let recipeName: RecipeDetailsTypeForChat["recipeName"] = "";
+  let ingredients: RecipeDetailsTypeForChat["ingredients"] = [];
+  let process: RecipeDetailsTypeForChat["process"] = [];
+  let point: RecipeDetailsTypeForChat["point"] = "";
 
   sections.forEach(section => {
     if (section.startsWith("料理名")) {

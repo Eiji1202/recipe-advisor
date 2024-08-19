@@ -2,8 +2,8 @@ import { Metadata } from "next";
 import SuggestionsForDishNameForm from "@/components/form/SuggestionsForDishNameForm";
 
 export const metadata: Metadata = {
-  title: "Form",
-  description: "レシピを提案してもらうために、フォームに入力してください。",
+  title: "フォーム",
+  description: "レシピを提案してもらうために、フォームに入力してください",
 };
 
 export default function RecipeAdvisorPage() {
