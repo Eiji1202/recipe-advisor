@@ -1,4 +1,3 @@
-import { auth } from "@/config/firebase";
 import { SaveRecipeType } from "@/types/cooking";
 import axios from "axios";
 

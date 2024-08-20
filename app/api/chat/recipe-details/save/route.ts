@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from '@/config/firebase';
-import { collection, addDoc } from 'firebase/firestore';
+import { db } from "@/config/firebase";
+import { collection, addDoc } from "firebase/firestore";
 import { SaveRecipeType } from "@/types/cooking";
 
 // レシピを保存
