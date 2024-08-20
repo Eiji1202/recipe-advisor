@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/table";
 import { toast } from "@/components/ui/use-toast";
 import { getRecipeDetailsById } from "@/lib/api/recipe/getRecipeDetailsById";
-import { RecipeDetailsTypeForView } from "@/types/cooking";
+import { SaveRecipeType as RecipeDetailsType } from "@/types/cooking";
 import { Loader } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -20,7 +20,7 @@ const RecipeDetailsView: React.FC = () => {
   const params = useParams();
   const id = params.id as string;
 
-  const [recipe, setRecipe] = useState<RecipeDetailsTypeForView | null>(null);
+  const [recipe, setRecipe] = useState<RecipeDetailsType | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -67,7 +67,7 @@ const RecipeDetailsView: React.FC = () => {
               <TableHeader>
                 <TableRow>
                   <TableHead>材料</TableHead>
-                  <TableHead>分量</TableHead>
+                  <TableHead>分量（{recipe?.servings}）</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

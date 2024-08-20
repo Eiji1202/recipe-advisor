@@ -25,13 +25,4 @@ export type SaveRecipeType = {
   taste: Taste;
 };
 
-export type RecipeDetailsTypeForView = {
-  uid: string
-  recipeName: string;
-  ingredients: Ingredient[];
-  process: string[];
-  point: string;
-  taste: Taste;
-};
-
-export type RecipeListType = (RecipeDetailsTypeForView & { id: string })[];
+export type RecipeListType = (SaveRecipeType & { id: string })[];

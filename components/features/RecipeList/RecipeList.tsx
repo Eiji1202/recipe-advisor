@@ -12,6 +12,7 @@ import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "@/components/ui/use-toast";
 import { auth } from "@/config/firebase";
+import { deleteRecipe } from "@/lib/api/recipe/deleteRecipe";
 import { getAllRecipe } from "@/lib/api/recipe/getAllRecipe";
 import { RecipeListType, Taste } from "@/types/cooking";
 import { User } from "firebase/auth";
@@ -24,8 +25,7 @@ const RecipeList: React.FC = () => {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [recipes, setRecipes] = useState<RecipeListType | []>([]);
-
-  console.log(recipes);
+  const [isDeleted, setIsDeleted] = useState<boolean>(false);
 
   useEffect(() => {
     const currentUser = auth.currentUser;
@@ -55,7 +55,7 @@ const RecipeList: React.FC = () => {
     };
 
     fetchRecipes();
-  }, [user]);
+  }, [user, router, isDeleted]);
 
   // テイスト別にレシピを分類する関数
   const categorizeRecipesByTaste = (recipes: RecipeListType) => {
@@ -72,6 +72,27 @@ const RecipeList: React.FC = () => {
   };
 
   const categorizedRecipes = categorizeRecipesByTaste(recipes);
+
+  // レシピの削除
+  const handleDeleteRecipe = async (id: string) => {
+    const isConfirmed = confirm("本当に削除しますか？");
+    if (!isConfirmed) return;
+
+    try {
+      // レシピの削除処理を実装
+      await deleteRecipe(id);
+      toast({
+        title: "レシピを削除しました",
+      });
+      setIsDeleted(true);
+    } catch (error: any) {
+      toast({
+        title: "レシピの削除に失敗しました",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
+  };
 
   return (
     <Card className="w-full lg:p-6">
@@ -115,10 +136,11 @@ const RecipeList: React.FC = () => {
                             href={`/recipe/list/${recipe.id}`}
                             className="underline underline-offset-4 hover:opacity-70 transition-opacity"
                           >
-                            {recipe.recipeName}
+                            {recipe.recipeName}（{recipe.servings}）
                           </Link>
                           <Button
                             asChild
+                            onClick={() => handleDeleteRecipe(recipe.id)}
                             size="icon"
                             variant="outline"
                             className="hover:cursor-pointer p-1"
