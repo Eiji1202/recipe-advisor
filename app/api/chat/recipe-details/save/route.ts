@@ -8,19 +8,8 @@ export async function POST(request: NextRequest) {
   try {
     const data: SaveRecipeType = await request.json();
 
-    const formattedRecipeName = `${data.recipeName}（${data.servings}）`;
-
-    const recipeData = {
-      uid: data.uid,
-      recipeName: formattedRecipeName,
-      ingredients: data.ingredients,
-      process: data.process,
-      point: data.point,
-      taste: data.taste,
-    };
-
     // Firestoreにレシピを保存
-    const docRef = await addDoc(collection(db, "recipes"), recipeData);
+    const docRef = await addDoc(collection(db, "recipes"), data);
 
     return NextResponse.json({ message: "レシピの保存に成功しました", id: docRef.id }, { status: 200 });
   } catch (error: any) {

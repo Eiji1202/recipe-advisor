@@ -3,6 +3,7 @@ import { db } from '@/config/firebase';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { RecipeListType, SaveRecipeType } from "@/types/cooking";
 
+// レシピ一覧の取得
 export async function GET(request: NextRequest) {
   try {
     const uid = request.nextUrl.searchParams.get("uid");
