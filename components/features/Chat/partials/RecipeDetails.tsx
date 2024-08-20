@@ -34,12 +34,12 @@ export const RecipeDetails: React.FC<Props> = (data) => {
 
   const getLabel = () => {
     switch (true) {
-      case isSaving:
-        return <Loader className="animate-spin" />;
-      case isSaved:
-        return <>保存済み</>;
-      default:
-        return <>レシピを保存する</>;
+    case isSaving:
+      return <Loader className="animate-spin" />;
+    case isSaved:
+      return <>保存済み</>;
+    default:
+      return <>レシピを保存する</>;
     }
   };
 

@@ -14,8 +14,8 @@ export async function POST(request: NextRequest) {
       {
         model: "gpt-4o-mini",
         messages: [
-          { role: 'system', content: 'あなたは役に立つアシスタントです。' },
-          { role: 'user', content: generatePromptForRecipeDetails(parsedData) },
+          { role: "system", content: "あなたは役に立つアシスタントです。" },
+          { role: "user", content: generatePromptForRecipeDetails(parsedData) },
         ],
         max_tokens: 1000,
         temperature: 0.7,

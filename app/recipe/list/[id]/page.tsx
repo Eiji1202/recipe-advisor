@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function RecipeDetailsPage() {
   return (
-    <div className="container flex items-center justify-center py-8">
+    <div className='container flex items-center justify-center py-8'>
       <RecipeDetailsView />
     </div>
   );

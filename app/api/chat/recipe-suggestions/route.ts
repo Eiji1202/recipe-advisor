@@ -14,8 +14,8 @@ export async function POST(request: NextRequest) {
       {
         model: "gpt-4o-mini",
         messages: [
-          { role: 'system', content: 'あなたは役に立つアシスタントです。' },
-          { role: 'user', content: generatePromptForRecipeSuggestions(parsedData) },
+          { role: "system", content: "あなたは役に立つアシスタントです。" },
+          { role: "user", content: generatePromptForRecipeSuggestions(parsedData) },
         ],
         max_tokens: 1000,
         temperature: 0.7,
@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
     // レスポンスのコンテンツを取得し、カンマで分割して配列に変換
     const content = response.data.choices[0].message.content;
 
-    const recipeNames = content.split(',').map((item: string) => item.trim()).filter(Boolean);
+    const recipeNames = content.split(",").map((item: string) => item.trim()).filter(Boolean);
 
     return NextResponse.json(recipeNames);
   } catch (error: any) {
@@ -53,7 +53,7 @@ const generatePromptForRecipeSuggestions = (data: RecipeSuggestionsSchemaType) =
     prompt += ` また、以下の調味料を使用してください: ${seasonings.join(", ")}。`;
   }
 
-  prompt += ` 異なる3つの料理名だけをカンマ区切り（句読点はNG）で提案してください。料理名のみです。`
+  prompt += " 異なる3つの料理名だけをカンマ区切り（句読点はNG）で提案してください。料理名のみです。";
 
   return prompt;
 };
