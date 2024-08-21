@@ -13,10 +13,11 @@ import { toast } from "@/components/ui/use-toast";
 import { getRecipeDetailsById } from "@/lib/api/recipe/getRecipeDetailsById";
 import { SaveRecipeType as RecipeDetailsType } from "@/types/cooking";
 import { Loader } from "lucide-react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const RecipeDetailsView: React.FC = () => {
+  const router = useRouter();
   const params = useParams();
   const id = params.id as string;
 
@@ -45,8 +46,12 @@ const RecipeDetailsView: React.FC = () => {
     fetchRecipe();
   }, [id]);
 
+  const handleBack = () => {
+    router.push("/recipe/list");
+  };
+
   return (
-    <Card className="w-full max-w-[800px] min-h-[320px] lg:p-6">
+    <Card className="w-full max-w-[800px] lg:p-6">
       {isLoading ? (
         <div className="absolute inset-0 flex justify-center items-center gap-2 text-muted-foreground">
           <Loader
@@ -101,11 +106,11 @@ const RecipeDetailsView: React.FC = () => {
             </div>
             <div className="flex items-center justify-center mt-6 lg:mt-8">
               <Button
-                // onClick={handleBack}
+                onClick={handleBack}
                 variant="secondary"
                 className="w-full lg:text-lg rounded-full"
               >
-                戻る
+                レシピ一覧に戻る
               </Button>
             </div>
           </CardContent>

@@ -54,8 +54,8 @@ const RecipeSuggestions: React.FC<Props> = (props) => {
                   <RadioGroup
                     value={field.value}
                     onValueChange={field.onChange}
-                    className={`flex flex-col gap-4 border border-gray-300 rounded-lg p-4 ${
-                      errors.selectRecipe?.message && "border-destructive"
+                    className={`flex flex-col gap-4 border rounded-lg p-4 ${
+                      !!errors.selectRecipe ? "border-destructive" : "border-gray-300"
                     }`}
                   >
                     {recipes.map((recipe, index) => (
@@ -77,7 +77,7 @@ const RecipeSuggestions: React.FC<Props> = (props) => {
                     ))}
                   </RadioGroup>
                 </FormControl>
-                <FormMessage>{errors.selectRecipe?.message}</FormMessage>
+                <FormMessage className="ml-4">{errors.selectRecipe?.message}</FormMessage>
               </FormItem>
             )}
           />
