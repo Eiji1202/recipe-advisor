@@ -1,16 +1,16 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/shadcn-ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { toast } from "@/components/ui/use-toast";
+} from "@/components/shadcn-ui/card";
+import { Table, TableBody, TableCell, TableRow } from "@/components/shadcn-ui/table";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/shadcn-ui/tabs";
+import { toast } from "@/components/shadcn-ui/use-toast";
 import { auth } from "@/config/firebase";
 import { deleteRecipe } from "@/lib/api/recipe/deleteRecipe";
 import { getAllRecipe } from "@/lib/api/recipe/getAllRecipe";

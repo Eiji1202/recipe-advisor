@@ -2,10 +2,10 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { Card } from "../../ui/card";
+import { Card } from "@/components/shadcn-ui/card";
 import { RecipeSuggestionsSchemaType } from "@/utils/schema/chat/recipeSuggestions";
 import { getRecipeSuggestions } from "@/lib/api/chat/getRecipeSuggestions";
-import { toast } from "../../ui/use-toast";
+import { toast } from "@/components/shadcn-ui/use-toast";
 import { Loader } from "lucide-react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { getRecipeDetails } from "@/lib/api/chat/getRecipeDetails";

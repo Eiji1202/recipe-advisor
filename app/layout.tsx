@@ -3,8 +3,8 @@ import { Murecho } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
-import Header from "@/components/layout/Header";
-import { Toaster } from "@/components/ui/toaster";
+import Header from "@/components/original/layout/Header";
+import { Toaster } from "@/components/shadcn-ui/toaster";
 
 const murecho = Murecho({ subsets: ["latin"] });
 

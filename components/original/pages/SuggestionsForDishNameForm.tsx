@@ -7,22 +7,22 @@ import {
   tasteOptions,
   servingsOptions,
 } from "@/utils/constants/options";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Button } from "@/components/shadcn-ui/button";
+import { Input } from "@/components/shadcn-ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/components/shadcn-ui/select";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/components/shadcn-ui/card";
 import {
   Form,
   FormField,
@@ -30,7 +30,7 @@ import {
   FormLabel,
   FormControl,
   FormMessage,
-} from "@/components/ui/form";
+} from "@/components/shadcn-ui/form";
 import { Asterisk } from "lucide-react";
 import {
   Dialog,
@@ -38,7 +38,7 @@ import {
   DialogDescription,
   DialogFooter,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from "@/components/shadcn-ui/dialog";
 import { useRouter } from "next/navigation";
 import { CookingTime, Servings, Taste } from "@/types/cooking";
 

@@ -3,15 +3,20 @@ import { auth } from "@/config/firebase";
 import { siteConfig } from "@/config/site";
 import Link from "next/link";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { Button } from "../ui/button";
+import { Button } from "../../shadcn-ui/button";
 import { useRouter } from "next/navigation";
 import { signOut } from "firebase/auth";
-import { toast } from "../ui/use-toast";
+import { toast } from "../../shadcn-ui/use-toast";
+import { LogOut, NotebookTabs } from "lucide-react";
 
 const Header = () => {
   const router = useRouter();
   const [user] = useAuthState(auth);
   const isSignedIn = !!user;
+
+  if (!isSignedIn) {
+    router.push("/");
+  }
 
   const logOut = async () => {
     const isConfirmed = window.confirm("ログアウトしますか？");
@@ -35,17 +40,20 @@ const Header = () => {
   return (
     <header className="h-16 border-b flex items-center sticky top-0 z-10 bg-white">
       <div className="container flex items-center justify-between">
-        <h1 className="font-bold text-2xl">
+        <h1 className="font-bold text-lg lg:text-2xl">
           <Link href="/recipe-advisor">{siteConfig.name}</Link>
         </h1>
         {isSignedIn && (
-          <ul className="flex items-center gap-4 lg:gap-6">
+          <ul className="flex items-center gap-3 lg:gap-6">
             <li>
               <Button
                 asChild
                 variant="outline"
               >
-                <Link href="/recipe/list">レシピ一覧</Link>
+                <Link href="/recipe/list">
+                  <NotebookTabs className="lg:hidden" size={16}/>
+                  <span className="hidden lg:inline">レシピ一覧</span>
+                </Link>
               </Button>
             </li>
             <li>
@@ -53,7 +61,8 @@ const Header = () => {
                 onClick={logOut}
                 variant="secondary"
               >
-                ログアウト
+                <LogOut className="lg:hidden" size={16}/>
+                <span className="hidden lg:inline">ログアウト</span>
               </Button>
             </li>
           </ul>
