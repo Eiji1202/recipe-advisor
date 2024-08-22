@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import SuggestionsForDishNameForm from "@/components/form/SuggestionsForDishNameForm";
+import SuggestionsForDishNameForm from "@/components/original/pages/SuggestionsForDishNameForm";
 
 export const metadata: Metadata = {
   title: "フォーム",

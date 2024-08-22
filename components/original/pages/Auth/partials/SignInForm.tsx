@@ -8,17 +8,17 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../../../ui/form";
+} from "@/components/shadcn-ui/form";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Input } from "../../../ui/input";
-import { Button } from "../../../ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "../../../ui/card";
+import { Input } from "@/components/shadcn-ui/input";
+import { Button } from "@/components/shadcn-ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/shadcn-ui/card";
 import Image from "next/image";
 import { SignInSchemaType, signInSchema } from "@/utils/schema/auth/signIn";
 import { signIn } from "@/lib/api/auth/signIn";
 import { useRouter } from "next/navigation";
-import { toast } from "../../../ui/use-toast";
+import { toast } from "@/components/shadcn-ui/use-toast";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/config/firebase";
 import { Loader } from "lucide-react";

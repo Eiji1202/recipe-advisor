@@ -1,4 +1,4 @@
-import Auth from "@/components/form/Auth/Auth";
+import Auth from "@/components/original/pages/Auth/Auth";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

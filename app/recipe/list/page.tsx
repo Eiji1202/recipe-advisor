@@ -1,4 +1,4 @@
-import RecipeList from "@/components/features/RecipeList/RecipeList";
+import RecipeList from "@/components/original/pages/RecipeList";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

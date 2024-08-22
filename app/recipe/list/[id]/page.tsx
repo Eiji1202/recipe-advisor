@@ -1,4 +1,4 @@
-import RecipeDetailsView from "@/components/features/RecipeDetailsView/RecipeDetailsView";
+import RecipeDetailsView from "@/components/original/pages/RecipeDetailsView";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

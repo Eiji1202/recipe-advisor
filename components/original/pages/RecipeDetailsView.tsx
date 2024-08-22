@@ -1,6 +1,6 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/shadcn-ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/shadcn-ui/card";
 import {
   Table,
   TableBody,
@@ -8,8 +8,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { toast } from "@/components/ui/use-toast";
+} from "@/components/shadcn-ui/table";
+import { toast } from "@/components/shadcn-ui/use-toast";
 import { getRecipeDetailsById } from "@/lib/api/recipe/getRecipeDetailsById";
 import { SaveRecipeType as RecipeDetailsType } from "@/types/cooking";
 import { Loader } from "lucide-react";

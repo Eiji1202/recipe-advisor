@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/shadcn-ui/button";
+import { CardContent, CardHeader, CardTitle } from "@/components/shadcn-ui/card";
 import {
   Table,
   TableBody,
@@ -9,7 +9,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/components/shadcn-ui/table";
 import { RecipeDetailsTypeForChat } from "@/types/cooking";
 import { Loader } from "lucide-react";
 import { useRouter } from "next/navigation";

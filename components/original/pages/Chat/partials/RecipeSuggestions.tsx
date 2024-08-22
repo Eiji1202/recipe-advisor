@@ -5,7 +5,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/components/shadcn-ui/card";
 import React from "react";
 import { useFormContext } from "react-hook-form";
 import { SelectRecipeType } from "../Chat";
@@ -14,11 +14,11 @@ import {
   FormField,
   FormItem,
   FormMessage,
-} from "@/components/ui/form";
+} from "@/components/shadcn-ui/form";
 import { RadioGroup } from "@radix-ui/react-radio-group";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { RadioGroupItem } from "@/components/ui/radio-group";
+import { Button } from "@/components/shadcn-ui/button";
+import { Label } from "@/components/shadcn-ui/label";
+import { RadioGroupItem } from "@/components/shadcn-ui/radio-group";
 
 type Props = {
   recipes: string[];
