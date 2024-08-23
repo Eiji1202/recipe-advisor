@@ -53,9 +53,7 @@ export default function RootLayout({
         <main className="flex-1 relative">
           <div className="absolute inset-0 bg-wallpaper-auth bg-cover bg-center bg-fixed" />
           <div className="absolute inset-0 flex items-start justify-center overflow-auto">
-            <div className="flex items-center justify-center min-h-full w-full">
-              {children}
-            </div>
+            {children}
           </div>
         </main>
         <Toaster />

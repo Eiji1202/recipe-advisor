@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function AuthPage() {
   return (
-    <div className="container flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-8 py-8">
+    <div className="container flex flex-col lg:flex-row items-center justify-center min-h-full w-full gap-6 lg:gap-8 py-8">
       <Auth />
     </div>
   );
