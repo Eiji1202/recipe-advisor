@@ -4,19 +4,24 @@ import { siteConfig } from "@/config/site";
 import Link from "next/link";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Button } from "../../shadcn-ui/button";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { signOut } from "firebase/auth";
 import { toast } from "../../shadcn-ui/use-toast";
-import { LogOut, NotebookTabs } from "lucide-react";
+import { Bot, LogOut, NotebookTabs } from "lucide-react";
+import { useEffect } from "react";
 
 const Header = () => {
   const router = useRouter();
+  const pathname = usePathname();
+  const isRecipeListPage = pathname.startsWith("/recipe/list");
   const [user] = useAuthState(auth);
   const isSignedIn = !!user;
 
-  if (!isSignedIn) {
-    router.push("/");
-  }
+  useEffect(() => {
+    if (!isSignedIn) {
+      router.replace("/");
+    }
+  }, [isSignedIn, router]);
 
   const logOut = async () => {
     const isConfirmed = window.confirm("ログアウトしますか？");
@@ -45,6 +50,19 @@ const Header = () => {
         </h1>
         {isSignedIn && (
           <ul className="flex items-center gap-3 lg:gap-6">
+            {isRecipeListPage && (
+              <li>
+                <Button
+                  asChild
+                  variant="outline"
+                >
+                  <Link href="/recipe-advisor">
+                    <Bot className="lg:hidden" size={16}/>
+                    <span className="hidden lg:inline">レシピ提案</span>
+                  </Link>
+                </Button>
+              </li>
+            )}
             <li>
               <Button
                 asChild
