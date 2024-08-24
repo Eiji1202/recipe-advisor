@@ -38,19 +38,21 @@ const RecipeList: React.FC = () => {
       });
       router.back();
     }
+  }, [router]);
+
+  useEffect(() => {
+    if (!user) return;
 
     const fetchRecipes = async () => {
-      if (user?.uid) {
-        try {
-          const recipes = await getAllRecipe(user.uid);
-          setRecipes(recipes);
-        } catch (error: any) {
-          toast({
-            title: "レシピ一覧の取得に失敗しました",
-            description: error.message,
-            variant: "destructive",
-          });
-        }
+      try {
+        const recipes = await getAllRecipe(user.uid);
+        setRecipes(recipes);
+      } catch (error: any) {
+        toast({
+          title: "レシピ一覧の取得に失敗しました",
+          description: error.message,
+          variant: "destructive",
+        });
       }
     };
 

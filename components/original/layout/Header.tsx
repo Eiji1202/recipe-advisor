@@ -13,7 +13,7 @@ import { useEffect } from "react";
 const Header = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const isRecipeListPage = pathname.startsWith("/recipe/list");
+  const isRecipeListPage = pathname?.startsWith("/recipe/list");
   const [user] = useAuthState(auth);
   const isSignedIn = !!user;
 
