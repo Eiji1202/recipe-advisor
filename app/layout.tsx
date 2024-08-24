@@ -5,6 +5,8 @@ import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 import Header from "@/components/original/layout/Header";
 import { Toaster } from "@/components/shadcn-ui/toaster";
+import { Suspense } from "react";
+import { Loader } from "lucide-react";
 
 const murecho = Murecho({ subsets: ["latin"] });
 
@@ -53,7 +55,9 @@ export default function RootLayout({
         <main className="flex-1 relative">
           <div className="absolute inset-0 bg-wallpaper-auth bg-cover bg-center bg-fixed" />
           <div className="absolute inset-0 flex items-start justify-center overflow-auto">
-            {children}
+            <Suspense fallback={<Loader className="animate-spin"/>}>
+              {children}
+            </Suspense>
           </div>
         </main>
         <Toaster />

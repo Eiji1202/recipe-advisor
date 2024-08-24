@@ -51,7 +51,6 @@ const Chat: React.FC = () => {
   });
 
   useEffect(() => {
-    setIsLoading(true);
     const currentUser = auth.currentUser;
     if (currentUser) {
       setUser(currentUser);
@@ -62,8 +61,10 @@ const Chat: React.FC = () => {
       });
       router.back();
     }
+  }, [router]);
 
-    // 必須のクエリパラメータが不足している場合、前のページに戻る
+  // クエリパラメータが不足している場合は戻る
+  useEffect(() => {
     if (!cookingTime || !taste || !ingredients || !servings) {
       toast({
         title: "クエリパラメータが不足しています",
@@ -71,20 +72,22 @@ const Chat: React.FC = () => {
       });
       router.back();
     }
+  }, [cookingTime, taste, ingredients, servings, router]);
 
-    // クエリパラメータを適切な形式に変換する
-    const ingredientsArray = ingredients.split(",");
-    const seasoningsArray = seasonings ? seasonings.split(",") : [];
-
-    const suggestionsRequestData: RecipeSuggestionsSchemaType = {
-      cookingTime,
-      taste,
-      ingredients: ingredientsArray as [string, ...string[]],
-      seasonings: seasoningsArray,
-    };
-
-    // レシピ提案を取得
+  //料理候補を取得
+  useEffect(() => {
     const fetchRecipeSuggestions = async () => {
+      setIsLoading(true);
+      const ingredientsArray = ingredients.split(",");
+      const seasoningsArray = seasonings ? seasonings.split(",") : [];
+
+      const suggestionsRequestData: RecipeSuggestionsSchemaType = {
+        cookingTime,
+        taste,
+        ingredients: ingredientsArray as [string, ...string[]],
+        seasonings: seasoningsArray,
+      };
+
       try {
         const response = await getRecipeSuggestions(suggestionsRequestData);
         setRecipes(response);
@@ -100,7 +103,7 @@ const Chat: React.FC = () => {
     };
 
     fetchRecipeSuggestions();
-  }, [cookingTime, taste, ingredients, seasonings, servings, router]);
+  }, [cookingTime, taste, ingredients, seasonings]);
 
   // 料理を選択してレシピを取得
   const onSubmit: SubmitHandler<SelectRecipeType> = async (data) => {
