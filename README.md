@@ -9,6 +9,7 @@ https://recipe-advisor-beige.vercel.app/
 - 「調理時間、味のテイスト、食材、調味料、人数」を入力して送信すると、3つの料理を提案してくれる
 - 3つの料理の中から作りたい料理を選択すると、その料理に必要な食材、手順を教えてくれる
 - 提案してもらった料理は保存でき、ヘッダーの一覧ページから確認できる
+- レシピはキーワード検索できる
 - 保存した料理は削除することもできる
 - ログアウト
 
@@ -39,4 +40,10 @@ https://github.com/user-attachments/assets/add66efb-d269-434e-9acc-41eab91a21f3
 > ### 保存したレシピの確認と削除
 
 https://github.com/user-attachments/assets/409a52ad-cf2d-4075-8b50-8e8605370e1c
+
+> ### 保存したレシピをキーワード検索
+
+https://github.com/user-attachments/assets/650565c5-8beb-4ea9-9c44-941ada1ee9e3
+
+
 
