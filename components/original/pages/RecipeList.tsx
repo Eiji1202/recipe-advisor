@@ -8,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/shadcn-ui/card";
+import { Input } from "@/components/shadcn-ui/input";
 import { Table, TableBody, TableCell, TableRow } from "@/components/shadcn-ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/shadcn-ui/tabs";
 import { toast } from "@/components/shadcn-ui/use-toast";
@@ -16,7 +17,7 @@ import { deleteRecipe } from "@/lib/api/recipe/deleteRecipe";
 import { getAllRecipe } from "@/lib/api/recipe/getAllRecipe";
 import { RecipeListType, Taste } from "@/types/cooking";
 import { User } from "firebase/auth";
-import { Trash2 } from "lucide-react";
+import { CircleX, Search, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -24,8 +25,10 @@ import React, { useEffect, useState } from "react";
 const RecipeList: React.FC = () => {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
-  const [recipes, setRecipes] = useState<RecipeListType | []>([]);
+  const [allRecipes, setAllRecipes] = useState<RecipeListType>([]); // 初期の全レシピデータ
+  const [filteredRecipes, setFilteredRecipes] = useState<RecipeListType>([]); // フィルタリングされたレシピ
   const [isDeleted, setIsDeleted] = useState<boolean>(false);
+  const [searchInput, setSearchInput] = useState<string>("");
 
   useEffect(() => {
     const currentUser = auth.currentUser;
@@ -46,7 +49,8 @@ const RecipeList: React.FC = () => {
     const fetchRecipes = async () => {
       try {
         const recipes = await getAllRecipe(user.uid);
-        setRecipes(recipes);
+        setAllRecipes(recipes);
+        setFilteredRecipes(recipes);
       } catch (error: any) {
         toast({
           title: "レシピ一覧の取得に失敗しました",
@@ -58,6 +62,27 @@ const RecipeList: React.FC = () => {
 
     fetchRecipes();
   }, [user, router, isDeleted]);
+
+  /**
+   * フィルタリング処理
+   * 料理名か食材名に検索後が含まれているレシピを抽出
+   */
+  const handleSearch = () => {
+    const newFilteredRecipes = allRecipes.filter(
+      (recipe) =>
+        recipe.recipeName.includes(searchInput) ||
+          recipe.ingredients.some((ingredient) =>
+            ingredient.name.includes(searchInput)
+          )
+    );
+    setFilteredRecipes(newFilteredRecipes);
+  };
+
+  // 検索ワードのリセット関数
+  const resetSearch = () => {
+    setSearchInput("");
+    setFilteredRecipes(allRecipes);
+  };
 
   // テイスト別にレシピを分類する関数
   const categorizeRecipesByTaste = (recipes: RecipeListType) => {
@@ -73,7 +98,7 @@ const RecipeList: React.FC = () => {
     }, initialAcc);
   };
 
-  const categorizedRecipes = categorizeRecipesByTaste(recipes);
+  const categorizedRecipes = categorizeRecipesByTaste(filteredRecipes);
 
   // レシピの削除
   const handleDeleteRecipe = async (id: string) => {
@@ -102,7 +127,30 @@ const RecipeList: React.FC = () => {
         <CardTitle className="text-lg lg:text-2xl">レシピ一覧</CardTitle>
         <CardDescription>保存したレシピの一覧です</CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="space-y-4">
+        <div className="flex gap-2 items-center relative">
+          <Input
+            placeholder="料理名・食材から検索"
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+          />
+          {searchInput.length > 0 && (
+            <button
+              className="absolute right-12 hover:opacity-60 transition-opacity"
+              onClick={resetSearch}
+            >
+              <CircleX className="bg-white"/>
+            </button>
+          )}
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={handleSearch}
+            disabled={searchInput.length === 0}
+          >
+            <Search />
+          </Button>
+        </div>
         <Tabs defaultValue="和風">
           <TabsList className="grid w-full md:grid-cols-5 overflow-auto">
             {Object.keys(categorizedRecipes).map((taste) => (
